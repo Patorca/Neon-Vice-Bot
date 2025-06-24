@@ -1,0 +1,297 @@
+2025-06-24 08:50:03,004 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:50:03,004 - __main__ - ERROR - DISCORD_BOT_TOKEN environment variable not found!
+2025-06-24 08:50:28,892 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:50:28,892 - __main__ - ERROR - DISCORD_BOT_TOKEN environment variable not found!
+2025-06-24 08:50:58,196 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:50:58,196 - discord.client - INFO - logging in using static token
+2025-06-24 08:50:58,783 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:50:58,783 - discord.client - INFO - logging in using static token
+2025-06-24 08:50:59,044 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 08:50:59,467 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: dc3698daa6ac174d6e33d76a19e84b7b).
+2025-06-24 08:51:02,554 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 08:51:02,554 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 08:51:58,999 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 08:51:59,362 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 9f416c863c6ac17fcc7ca34f07826a39).
+2025-06-24 08:52:02,467 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 08:52:02,468 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 08:53:07,229 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:53:07,230 - discord.client - INFO - logging in using static token
+2025-06-24 08:53:07,912 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 08:53:08,231 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 20e0c190282601233330006c0d4775e3).
+2025-06-24 08:53:11,319 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 08:53:11,319 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 08:54:11,849 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:54:11,849 - discord.client - INFO - logging in using static token
+2025-06-24 08:54:12,611 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 08:54:12,926 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: e4483e1cc535f5f081de35bb1b03e4d8).
+2025-06-24 08:54:16,019 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 08:54:16,019 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 08:55:16,525 - cogs.verification - ERROR - Error creating verification message: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 08:55:16,644 - __main__ - ERROR - Slash command error: Command 'verification' raised an exception: NotFound: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 08:55:16,756 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='CommandTree-invoker' coro=<CommandTree._from_interaction.<locals>.wrapper() done, defined at /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py:1149> exception=NotFound('404 Not Found (error code: 10062): Unknown interaction')>
+Traceback (most recent call last):
+  File "/home/runner/workspace/cogs/verification.py", line 227, in verification
+    await interaction.response.send_message(
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/verification.py", line 240, in verification
+    await interaction.response.send_message(
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'verification' raised an exception: NotFound: 404 Not Found (error code: 10062): Unknown interaction
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1151, in wrapper
+    await self._call(interaction)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1314, in _call
+    await self.on_error(interaction, e)
+  File "/home/runner/workspace/main.py", line 100, in on_app_command_error
+    await interaction.response.send_message("❌ An unexpected error occurred!", ephemeral=True)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 08:55:22,412 - cogs.verification - ERROR - Error creating verification message: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 08:55:22,527 - __main__ - ERROR - Slash command error: Command 'verification' raised an exception: NotFound: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 08:55:22,650 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='CommandTree-invoker' coro=<CommandTree._from_interaction.<locals>.wrapper() done, defined at /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py:1149> exception=NotFound('404 Not Found (error code: 10062): Unknown interaction')>
+Traceback (most recent call last):
+  File "/home/runner/workspace/cogs/verification.py", line 227, in verification
+    await interaction.response.send_message(
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/verification.py", line 240, in verification
+    await interaction.response.send_message(
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'verification' raised an exception: NotFound: 404 Not Found (error code: 10062): Unknown interaction
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1151, in wrapper
+    await self._call(interaction)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1314, in _call
+    await self.on_error(interaction, e)
+  File "/home/runner/workspace/main.py", line 100, in on_app_command_error
+    await interaction.response.send_message("❌ An unexpected error occurred!", ephemeral=True)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 08:55:33,127 - cogs.verification - INFO - Verification role added to patorca (462635310724022285) in Neon Vice Roleplay
+2025-06-24 08:58:26,072 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:58:26,073 - discord.client - INFO - logging in using static token
+2025-06-24 08:58:27,053 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 08:58:27,418 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: dfb5e8453359ee2d8e3a040d7c58da75).
+2025-06-24 08:58:30,507 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 08:58:30,507 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 08:58:58,142 - cogs.tickets - INFO - Ticket panel created by patorca in 🎫・ᴛɪᴄᴋᴇᴛꜱ
+2025-06-24 08:58:58,344 - cogs.tickets - ERROR - Error creating ticket panel: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.
+2025-06-24 08:58:58,459 - __main__ - ERROR - Slash command error: Command 'ticket-panel' raised an exception: HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.
+2025-06-24 08:58:58,602 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='CommandTree-invoker' coro=<CommandTree._from_interaction.<locals>.wrapper() done, defined at /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py:1149> exception=HTTPException('400 Bad Request (error code: 40060): Interaction has already been acknowledged.')>
+Traceback (most recent call last):
+  File "/home/runner/workspace/cogs/tickets.py", line 237, in ticket_panel
+    await interaction.response.send_message(
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 226, in request
+    raise HTTPException(response, data)
+discord.errors.HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/tickets.py", line 249, in ticket_panel
+    await interaction.response.send_message(
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 226, in request
+    raise HTTPException(response, data)
+discord.errors.HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'ticket-panel' raised an exception: HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1151, in wrapper
+    await self._call(interaction)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1314, in _call
+    await self.on_error(interaction, e)
+  File "/home/runner/workspace/main.py", line 100, in on_app_command_error
+    await interaction.response.send_message("❌ An unexpected error occurred!", ephemeral=True)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 226, in request
+    raise HTTPException(response, data)
+discord.errors.HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.
+2025-06-24 08:59:16,309 - discord.ui.view - ERROR - Ignoring exception in view <TicketView timeout=None children=1> for item <Button style=<ButtonStyle.primary: 1> url=None disabled=False label='Crear Ticket' emoji=<PartialEmoji animated=False name='🎫' id=None> row=None sku_id=None>
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/ui/view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "/home/runner/workspace/cogs/tickets.py", line 21, in create_ticket
+    await interaction.response.defer(ephemeral=True)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 844, in defer
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 08:59:18,007 - cogs.tickets - INFO - Ticket created by patorca (462635310724022285) in Neon Vice Roleplay
+2025-06-24 08:59:31,499 - discord.ui.view - ERROR - Ignoring exception in view <CloseTicketView timeout=None children=1> for item <Button style=<ButtonStyle.danger: 4> url=None disabled=False label='Cerrar Ticket' emoji=<PartialEmoji animated=False name='🔒' id=None> row=None sku_id=None>
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/ui/view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "/home/runner/workspace/cogs/tickets.py", line 178, in close_ticket
+    await interaction.response.send_message(embed=embed)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 08:59:31,705 - discord.ui.view - ERROR - Ignoring exception in view <CloseTicketView timeout=None children=1> for item <Button style=<ButtonStyle.danger: 4> url=None disabled=False label='Close Ticket' emoji=<PartialEmoji animated=False name='🔒' id=None> row=None sku_id=None>
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/ui/view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "/home/runner/workspace/cogs/tickets.py", line 181, in close_ticket
+    await discord.utils.sleep_until(discord.utils.utcnow() + discord.timedelta(seconds=5))
+                                                             ^^^^^^^^^^^^^^^^^
+AttributeError: module 'discord' has no attribute 'timedelta'
+2025-06-24 09:02:46,211 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 09:02:46,211 - discord.client - INFO - logging in using static token
+2025-06-24 09:02:46,213 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 09:02:46,213 - discord.client - INFO - logging in using static token
+2025-06-24 09:02:46,862 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 09:02:47,226 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 00c9fe9948068206b3e9be24882fc599).
+2025-06-24 09:02:49,765 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 09:02:49,766 - discord.client - INFO - logging in using static token
+2025-06-24 09:02:50,679 - discord.http - WARNING - We are being rate limited. PUT https://discord.com/api/v10/applications/1168585266668240946/commands responded with 429. Retrying in 26.08 seconds.
+2025-06-24 09:03:46,887 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 09:03:47,216 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 7a4e16fba52da5de733f1065878e8e91).
+2025-06-24 09:03:50,305 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 09:03:50,306 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 09:04:17,031 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 09:04:17,367 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: ba2e6775e56d129f0b3dfef7d84cb33d).
+2025-06-24 09:04:17,520 - discord.ui.view - ERROR - Ignoring exception in view <TicketView timeout=None children=1> for item <Button style=<ButtonStyle.primary: 1> url=None disabled=False label='Crear Ticket' emoji=<PartialEmoji animated=False name='🎫' id=None> row=None sku_id=None>
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/ui/view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "/home/runner/workspace/cogs/tickets.py", line 55, in create_ticket
+    await interaction.response.defer(ephemeral=True)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 844, in defer
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 09:04:20,456 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 09:04:20,458 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 09:04:25,934 - discord.ui.view - ERROR - Ignoring exception in view <CloseTicketView timeout=None children=1> for item <Button style=<ButtonStyle.danger: 4> url=None disabled=False label='Cerrar Ticket' emoji=<PartialEmoji animated=False name='🔒' id=None> row=None sku_id=None>
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/ui/view.py", line 435, in _scheduled_task
+    await item.callback(interaction)
+  File "/home/runner/workspace/cogs/tickets.py", line 223, in close_ticket
+    await interaction.response.send_message(embed=embed)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/interactions.py", line 1004, in send_message
+    response = await adapter.create_interaction_response(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/webhook/async_.py", line 224, in request
+    raise NotFound(response, data)
+discord.errors.NotFound: 404 Not Found (error code: 10062): Unknown interaction
+2025-06-24 09:04:33,387 - cogs.tickets - INFO - Ticket ticket-patorca-0 closed by patorca (462635310724022285)
+2025-06-24 09:19:05,858 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 09:19:05,859 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 09:19:05,859 - discord.client - INFO - logging in using static token
+2025-06-24 09:19:05,860 - discord.client - INFO - logging in using static token
+2025-06-24 09:19:06,699 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 09:19:07,160 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 11dc044a6c4c59e83a93eb4435dcc84e).
+2025-06-24 09:19:10,249 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 09:19:10,249 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 09:20:06,673 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 09:20:07,068 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: ed3fe6b40aefe14c9010046a0d91109f).
+2025-06-24 09:20:10,201 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 09:20:10,201 - __main__ - INFO - Bot is in 7 guilds
+2025-06-24 09:24:16,053 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 09:24:16,053 - discord.client - INFO - logging in using static token
+2025-06-24 09:24:16,821 - __main__ - INFO - Synced 6 command(s)
+2025-06-24 09:24:17,199 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 1b4070f1b2f9eb50fee51502179a3e3b).
+2025-06-24 09:24:20,292 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-24 09:24:20,292 - __main__ - INFO - Bot is in 7 guilds
