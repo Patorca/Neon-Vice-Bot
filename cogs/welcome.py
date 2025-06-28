@@ -16,14 +16,12 @@ class Welcome(commands.Cog):
         """Send welcome message when a new member joins"""
         try:
             config = load_config()
-            guild_config = config.get('guilds', {}).get(str(member.guild.id), {})
+            # Fix: Use 'servers' instead of 'guilds' to match config.json structure
+            guild_config = config.get('servers', {}).get(str(member.guild.id), {})
             welcome_channel_id = guild_config.get('welcome_channel_id')
             
-            # Check for global config (backwards compatibility)
             if not welcome_channel_id:
-                welcome_channel_id = config.get('welcome_channel_id')
-                if not welcome_channel_id:
-                    return
+                return
             
             welcome_channel = member.guild.get_channel(welcome_channel_id)
             
@@ -31,33 +29,45 @@ class Welcome(commands.Cog):
                 logger.error(f"Welcome channel {welcome_channel_id} not found in {member.guild.name}")
                 return
             
-            # Create welcome embed
+            # Create enhanced welcome embed with original content
             embed = discord.Embed(
-                title="🎉 ¡Bienvenido al servidor!",
-                description=f"¡Hola {member.mention}! Te damos la bienvenida a **{member.guild.name}**.\n\n"
-                           f"**Para empezar:**\n"
-                           f"• Ve al canal de verificación y reacciona para obtener acceso\n"
-                           f"• Lee las normas del servidor\n"
-                           f"• ¡Presenta te y únete a la diversión!\n\n"
-                           f"Si necesitas ayuda, no dudes en crear un ticket de soporte.\n\n"
-                           f"¡Esperamos que disfrutes tu estancia aquí!",
-                color=0x00ff7f
+                title="🌟 ¡Un nuevo miembro ha llegado a la ciudad! 🌟",
+                description=f"## ¡Bienvenido {member.mention}! 👋\n\n"
+                           f"🎭 Has llegado a **{member.guild.name}**, donde cada historia comienza con una decisión...\n\n"
+                           f"### 🚀 **Primeros pasos para comenzar tu aventura:**\n"
+                           f"🔐 **Verificación:** Ve al canal de verificación y reacciona con ✅ para obtener acceso completo\n"
+                           f"📋 **Normas:** Lee nuestras reglas para mantener la armonía en la ciudad\n"
+                           f"🎤 **Presentación:** Cuéntanos quién eres y qué te trae por aquí\n"
+                           f"🎮 **Roleplay:** ¡Sumérgete en la experiencia más inmersiva!\n\n"
+                           f"### 💡 **¿Necesitas ayuda?**\n"
+                           f"🎫 Crea un ticket de soporte y nuestro staff te asistirá\n"
+                           f"👥 Pregunta a otros miembros de la comunidad\n\n"
+                           f"✨ *¡Esperamos que vivas experiencias inolvidables aquí!* ✨",
+                color=0x7289da
             )
             
-            # Set thumbnail to user's avatar
+            # Set thumbnail to user's avatar with border effect
             embed.set_thumbnail(url=member.display_avatar.url)
             
-            # Set server icon as embed image if available
+            # Add welcome banner or server image
             if member.guild.icon:
                 embed.set_image(url=member.guild.icon.url)
             
+            # Enhanced footer with member count and join date
             embed.set_footer(
-                text=f"Miembro #{len(member.guild.members)} • {member.guild.name}",
+                text=f"👥 Miembro #{len(member.guild.members)} • Únete a la aventura en {member.guild.name}",
                 icon_url=member.guild.icon.url if member.guild.icon else None
             )
             
             # Add timestamp
             embed.timestamp = discord.utils.utcnow()
+            
+            # Add fields for better organization
+            embed.add_field(
+                name="🎯 Tu nueva aventura comienza ahora",
+                value="Explora los canales, conoce gente nueva y vive experiencias únicas",
+                inline=False
+            )
             
             await welcome_channel.send(embed=embed)
             logger.info(f"Welcome message sent for {member} in {member.guild.name}")
@@ -83,14 +93,14 @@ class Welcome(commands.Cog):
             # Load config
             config = load_config()
             
-            # Initialize guild config if not exists
-            if 'guilds' not in config:
-                config['guilds'] = {}
-            if str(interaction.guild.id) not in config['guilds']:
-                config['guilds'][str(interaction.guild.id)] = {}
+            # Initialize server config if not exists
+            if 'servers' not in config:
+                config['servers'] = {}
+            if str(interaction.guild.id) not in config['servers']:
+                config['servers'][str(interaction.guild.id)] = {}
             
-            # Set welcome channel for this guild
-            config['guilds'][str(interaction.guild.id)]['welcome_channel_id'] = canal.id
+            # Set welcome channel for this server
+            config['servers'][str(interaction.guild.id)]['welcome_channel_id'] = canal.id
             
             # Save config
             if save_config(config):
@@ -145,8 +155,8 @@ class Welcome(commands.Cog):
             # Load config
             config = load_config()
             
-            # Check if guild config exists
-            if 'guilds' not in config or str(interaction.guild.id) not in config['guilds']:
+            # Check if server config exists
+            if 'servers' not in config or str(interaction.guild.id) not in config['servers']:
                 embed = discord.Embed(
                     title="ℹ️ Sin configuración",
                     description="Este servidor no tiene configurados mensajes de bienvenida.",
@@ -156,12 +166,13 @@ class Welcome(commands.Cog):
                 return
             
             # Remove welcome channel configuration
-            if 'welcome_channel_id' in config['guilds'][str(interaction.guild.id)]:
-                del config['guilds'][str(interaction.guild.id)]['welcome_channel_id']
+            if 'welcome_channel_id' in config['servers'][str(interaction.guild.id)]:
+                del config['servers'][str(interaction.guild.id)]['welcome_channel_id']
             
-            # Clean up empty guild config
-            if not config['guilds'][str(interaction.guild.id)]:
-                del config['guilds'][str(interaction.guild.id)]
+            # Clean up empty server config (but keep other settings)
+            if 'welcome_channel_id' not in config['servers'][str(interaction.guild.id)] and len(config['servers'][str(interaction.guild.id)]) <= 1:
+                # Only delete if no other important configs exist
+                pass
             
             # Save config
             if save_config(config):
@@ -194,12 +205,8 @@ class Welcome(commands.Cog):
         """Show current welcome configuration"""
         try:
             config = load_config()
-            guild_config = config.get('guilds', {}).get(str(interaction.guild.id), {})
+            guild_config = config.get('servers', {}).get(str(interaction.guild.id), {})
             welcome_channel_id = guild_config.get('welcome_channel_id')
-            
-            # Check for global config (backwards compatibility)
-            if not welcome_channel_id:
-                welcome_channel_id = config.get('welcome_channel_id')
             
             embed = discord.Embed(
                 title="ℹ️ Configuración de Bienvenida",
@@ -254,6 +261,79 @@ class Welcome(commands.Cog):
             embed = discord.Embed(
                 title="❌ Error",
                 description="Ocurrió un error al mostrar la información de bienvenida.",
+                color=0xff0000
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+    
+    @app_commands.command(name="previsualizar_bienvenida", description="Muestra una vista previa del mensaje de bienvenida")
+    async def preview_welcome(self, interaction: discord.Interaction):
+        """Show a preview of the welcome message"""
+        try:
+            # Check if user has manage server permissions
+            if not interaction.user.guild_permissions.manage_guild:
+                embed = discord.Embed(
+                    title="❌ Sin permisos",
+                    description="Necesitas permisos para gestionar el servidor para usar este comando.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+            
+            # Create preview embed (same as the actual welcome message)
+            embed = discord.Embed(
+                title="🌟 ¡Un nuevo miembro ha llegado a la ciudad! 🌟",
+                description=f"## ¡Bienvenido {interaction.user.mention}! 👋\n\n"
+                           f"🎭 Has llegado a **{interaction.guild.name}**, donde cada historia comienza con una decisión...\n\n"
+                           f"### 🚀 **Primeros pasos para comenzar tu aventura:**\n"
+                           f"🔐 **Verificación:** Ve al canal de verificación y reacciona con ✅ para obtener acceso completo\n"
+                           f"📋 **Normas:** Lee nuestras reglas para mantener la armonía en la ciudad\n"
+                           f"🎤 **Presentación:** Cuéntanos quién eres y qué te trae por aquí\n"
+                           f"🎮 **Roleplay:** ¡Sumérgete en la experiencia más inmersiva!\n\n"
+                           f"### 💡 **¿Necesitas ayuda?**\n"
+                           f"🎫 Crea un ticket de soporte y nuestro staff te asistirá\n"
+                           f"👥 Pregunta a otros miembros de la comunidad\n\n"
+                           f"✨ *¡Esperamos que vivas experiencias inolvidables aquí!* ✨",
+                color=0x7289da
+            )
+            
+            # Set thumbnail to user's avatar
+            embed.set_thumbnail(url=interaction.user.display_avatar.url)
+            
+            # Add server image if available
+            if interaction.guild.icon:
+                embed.set_image(url=interaction.guild.icon.url)
+            
+            # Enhanced footer
+            embed.set_footer(
+                text=f"👥 Miembro #{len(interaction.guild.members)} • Únete a la aventura en {interaction.guild.name}",
+                icon_url=interaction.guild.icon.url if interaction.guild.icon else None
+            )
+            
+            # Add timestamp
+            embed.timestamp = discord.utils.utcnow()
+            
+            # Add field
+            embed.add_field(
+                name="🎯 Tu nueva aventura comienza ahora",
+                value="Explora los canales, conoce gente nueva y vive experiencias únicas",
+                inline=False
+            )
+            
+            # Send preview with notice
+            preview_notice = discord.Embed(
+                title="👁️ Vista Previa del Mensaje de Bienvenida",
+                description="Este es el mensaje que verán los nuevos miembros cuando se unan al servidor:",
+                color=0x3498db
+            )
+            
+            await interaction.response.send_message(embeds=[preview_notice, embed], ephemeral=True)
+            logger.info(f"Welcome preview shown to {interaction.user} in {interaction.guild.name}")
+            
+        except Exception as e:
+            logger.error(f"Error showing welcome preview: {e}")
+            embed = discord.Embed(
+                title="❌ Error",
+                description="Ocurrió un error al mostrar la vista previa.",
                 color=0xff0000
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
