@@ -2607,3 +2607,30 @@ Traceback (most recent call last):
 discord.errors.HTTPException: 400 Bad Request (error code: 40060): Interaction has already been acknowledged.
 2025-06-28 17:47:16,879 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 3aee8ecc6e94e950def74751655a909f.
 2025-06-28 18:58:48,924 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 1c6e9d608e3b9e4d533770a3c1c420d7.
+2025-06-28 19:43:26,461 - __main__ - ERROR - DISCORD_BOT_TOKEN environment variable not found!
+2025-06-28 19:43:26,461 - __main__ - ERROR - DISCORD_BOT_TOKEN environment variable not found!
+2025-06-28 19:43:35,509 - __main__ - ERROR - DISCORD_BOT_TOKEN environment variable not found!
+2025-06-28 19:44:19,710 - discord.client - INFO - logging in using static token
+2025-06-28 19:44:20,366 - __main__ - INFO - Synced 9 command(s)
+2025-06-28 19:44:20,597 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 72ba342e2a2eb18283583f41675ea187).
+2025-06-28 19:44:21,622 - discord.client - INFO - logging in using static token
+2025-06-28 19:44:24,653 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-28 19:44:24,654 - __main__ - INFO - Bot is in 9 guilds
+2025-06-28 19:44:48,433 - discord.client - INFO - logging in using static token
+2025-06-28 19:44:48,986 - discord.http - WARNING - We are being rate limited. PUT https://discord.com/api/v10/applications/1168585266668240946/commands responded with 429. Retrying in 1.29 seconds.
+2025-06-28 19:45:50,448 - __main__ - INFO - Synced 9 command(s)
+2025-06-28 19:45:50,829 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: f9d46c97642d717552eb19212b437480).
+2025-06-28 19:45:54,898 - __main__ - INFO - Neon Vice BOT#5570 has connected to Discord!
+2025-06-28 19:45:54,900 - __main__ - INFO - Bot is in 9 guilds
+2025-06-28 19:46:06,231 - cogs.tickets - INFO - Panel de tickets creado por patorca en 🎫・ticket-soporte
+2025-06-28 19:46:11,507 - cogs.tickets - INFO - Ticket created by patorca (462635310724022285) in [Neon Vice] Los Santos Police Dep.
+2025-06-28 19:46:21,642 - cogs.tickets - INFO - Ticket ticket-patorca-0 cerrado por patorca (462635310724022285)
+2025-06-28 19:46:22,721 - cogs.verification - INFO - Added verification role to patorca in [Neon Vice] Los Santos Police Dep.
+2025-06-28 19:46:25,391 - cogs.verification - INFO - Removed verification role from patorca in [Neon Vice] Los Santos Police Dep.
+2025-06-28 19:46:35,336 - cogs.tickets - INFO - Ticket created by patorca (462635310724022285) in Neon Vice Roleplay
+2025-06-28 19:46:45,068 - cogs.tickets - INFO - Ticket ticket-patorca-0 cerrado por patorca (462635310724022285)
+2025-06-28 19:50:59,443 - cogs.tickets - INFO - Ticket created by patorca (462635310724022285) in Neon Vice - Ilegales
+2025-06-28 19:51:10,276 - cogs.tickets - INFO - Ticket ticket-patorca-0 cerrado por patorca (462635310724022285)
+2025-06-28 21:29:44,271 - discord.gateway - INFO - Shard ID None has successfully RESUMED session f9d46c97642d717552eb19212b437480.
+2025-06-28 21:35:11,773 - cogs.welcome - INFO - Welcome channel set to 1020374565710467163 for guild 1020374565190389760
+2025-06-28 21:36:11,781 - cogs.welcome - INFO - Welcome message sent for Neon AI#5367 in Neon Vice Roleplay

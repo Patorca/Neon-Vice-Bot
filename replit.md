@@ -139,6 +139,8 @@ This is a Discord bot built with Python using the discord.py library. The bot pr
 - June 24, 2025. Enhanced shutdown notifications to include email alerts to unlobo77777@gmail.com with HTML formatted status reports
 - June 24, 2025. Added utility cog with /ping command for bot latency monitoring with Discord API latency, response time, and status indicators
 - June 25, 2025. Enhanced welcome system with multi-server support - added /configurar_bienvenida, /desactivar_bienvenida, and /info_bienvenida commands for per-server configuration
+- June 28, 2025. Successfully migrated from Replit Agent to standard Replit environment with security improvements and dependency management
+- June 28, 2025. Enhanced welcome message system with original creative content, roleplay-themed messaging, and added /previsualizar_bienvenida command for administrators
 
 ## User Preferences
 
