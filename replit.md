@@ -141,6 +141,11 @@ This is a Discord bot built with Python using the discord.py library. The bot pr
 - June 25, 2025. Enhanced welcome system with multi-server support - added /configurar_bienvenida, /desactivar_bienvenida, and /info_bienvenida commands for per-server configuration
 - June 28, 2025. Successfully migrated from Replit Agent to standard Replit environment with security improvements and dependency management
 - June 28, 2025. Enhanced welcome message system with original creative content, roleplay-themed messaging, and added /previsualizar_bienvenida command for administrators
+- June 28, 2025. Added FiveM server status monitoring system with automatic updates every 5 minutes, real-time status tracking from status.cfx.re, and commands for configuration
+- June 29, 2025. Added comprehensive staff role management system for tickets with commands: /set-staff-role, /remove-staff-role, and /list-staff-roles for complete role administration
+- June 29, 2025. Added transcript channel management system for tickets with commands: /set-transcript-channel, /remove-transcript-channel, and /transcript-info for complete transcript administration
+- June 29, 2025. Enhanced ticket system with automatic staff role mentions when tickets are created and improved transcript DM delivery with better error handling
+- June 29, 2025. Changed bot activity status from "Watching" to "Playing" - now shows "Jugando Moderando Neon Vice RP"
 
 ## User Preferences
 

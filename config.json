@@ -11,7 +11,9 @@
       "transcript_channel_id": 1175492699156127866,
       "welcome_channel_id": 1020374565710467163,
       "admin_id": 462635310724022285,
-      "admin_email": "unlobo77777@gmail.com"
+      "admin_email": "unlobo77777@gmail.com",
+      "fivem_status_channel_id": 1020374568440954986,
+      "fivem_status_message_id": 1389256626338533516
     },
     "1238127937207930880": {
       "verification_role_id": 1238127937207930886,
@@ -65,6 +67,16 @@
       "welcome_channel_id": 1273658923563352124,
       "admin_id": 462635310724022285,
       "admin_email": "unlobo77777@gmail.com"
+    },
+    "1080155924129386607": {
+      "verification_role_id": 1164684033641431070,
+      "welcome_channel_id": 1080155924817248319,
+      "ticket_category_id": 1388790334569578547,
+      "staff_role_ids": [
+        1165624169862549626
+      ],
+      "staff_mention_role_id": 1165624169862549626,
+      "transcript_channel_id": 1388791075313029221
     }
   },
   "guilds": {
