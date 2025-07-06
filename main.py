@@ -63,6 +63,7 @@ class DiscordBot(commands.Bot):
         await self.load_extension('cogs.welcome')
         await self.load_extension('cogs.utility')
         await self.load_extension('cogs.fivem_status')
+        await self.load_extension('cogs.moderation')
         
         # Sync slash commands
         try:

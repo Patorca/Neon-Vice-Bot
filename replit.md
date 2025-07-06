@@ -146,6 +146,9 @@ This is a Discord bot built with Python using the discord.py library. The bot pr
 - June 29, 2025. Added transcript channel management system for tickets with commands: /set-transcript-channel, /remove-transcript-channel, and /transcript-info for complete transcript administration
 - June 29, 2025. Enhanced ticket system with automatic staff role mentions when tickets are created and improved transcript DM delivery with better error handling
 - June 29, 2025. Changed bot activity status from "Watching" to "Playing" - now shows "Jugando Moderando Neon Vice RP"
+- June 30, 2025. Successfully completed migration from Replit Agent to standard Replit environment with enhanced security, proper dependency management, and maintained all existing functionality including comprehensive moderation system
+- June 30, 2025. Fixed FiveM status monitoring persistence - migrated from PostgreSQL to config.json storage system per user preference for file-based configuration management, ensuring monitoring configurations survive bot restarts
+- June 30, 2025. Fixed FiveM monitor auto-loading after bot restart by adding on_ready event listener to automatically restore monitor configurations from config.json
 
 ## User Preferences
 
