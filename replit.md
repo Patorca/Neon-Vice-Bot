@@ -149,6 +149,9 @@ This is a Discord bot built with Python using the discord.py library. The bot pr
 - June 30, 2025. Successfully completed migration from Replit Agent to standard Replit environment with enhanced security, proper dependency management, and maintained all existing functionality including comprehensive moderation system
 - June 30, 2025. Fixed FiveM status monitoring persistence - migrated from PostgreSQL to config.json storage system per user preference for file-based configuration management, ensuring monitoring configurations survive bot restarts
 - June 30, 2025. Fixed FiveM monitor auto-loading after bot restart by adding on_ready event listener to automatically restore monitor configurations from config.json
+- July 6, 2025. Successfully completed migration from Replit Agent to standard Replit environment - all dependencies installed, Discord bot token configured securely, and bot running successfully with all 28 slash commands synced and active in 10 Discord guilds
+- July 9, 2025. Enhanced FiveM status monitoring system for improved multi-server support - added robust error handling for message/channel deletion, improved persistence across bot restarts, better logging with server names, and added global monitoring status command for administrators
+- July 10, 2025. Added mass role assignment system - new `/asignar_rol_todos` command allows administrators to assign a role to all server members with progress tracking, error handling, and comprehensive reporting
 
 ## User Preferences
 
