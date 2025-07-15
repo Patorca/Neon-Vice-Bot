@@ -29,46 +29,60 @@ class Welcome(commands.Cog):
                 logger.error(f"Welcome channel {welcome_channel_id} not found in {member.guild.name}")
                 return
             
-            # Create enhanced welcome embed with original content
+            # Create the new Neon Vice RP welcome embed
             embed = discord.Embed(
-                title="🌟 ¡Un nuevo miembro ha llegado a la ciudad! 🌟",
-                description=f"## ¡Bienvenido {member.mention}! 👋\n\n"
-                           f"🎭 Has llegado a **{member.guild.name}**, donde cada historia comienza con una decisión...\n\n"
-                           f"### 🚀 **Primeros pasos para comenzar tu aventura:**\n"
-                           f"🔐 **Verificación:** Ve al canal de verificación y reacciona con ✅ para obtener acceso completo\n"
-                           f"📋 **Normas:** Lee nuestras reglas para mantener la armonía en la ciudad\n"
-                           f"🎤 **Presentación:** Cuéntanos quién eres y qué te trae por aquí\n"
-                           f"🎮 **Roleplay:** ¡Sumérgete en la experiencia más inmersiva!\n\n"
-                           f"### 💡 **¿Necesitas ayuda?**\n"
-                           f"🎫 Crea un ticket de soporte y nuestro staff te asistirá\n"
-                           f"👥 Pregunta a otros miembros de la comunidad\n\n"
-                           f"✨ *¡Esperamos que vivas experiencias inolvidables aquí!* ✨",
-                color=0x7289da
+                title="💎 ¡Bienvenid@ a **Neon Vice RP**! 🌆",
+                description=f"🕶️ Un nuevo nivel de rol, estilo y libertad en Los Santos.\n\n"
+                           f"👋 ¡Hola, {member.mention} nuevo ciudadano!\n"
+                           f"Has llegado a **Neon Vice**, un servidor de GTA V Roleplay donde el estilo, la historia y la comunidad hacen la diferencia.\n"
+                           f"Prepárate para vivir tu mejor versión en Los Santos. 🧬",
+                color=0x9d4edd
             )
             
-            # Set thumbnail to user's avatar with border effect
+            # Add fields for better organization
+            embed.add_field(
+                name="🎯 ¿Qué puedes hacer en Neon Vice?",
+                value="🧑‍💼 Unirte a bandas, mafias, cuerpos de seguridad o negocios legales\n"
+                      "🏙️ Adquirir o alquilar locales → <#1392978362208882748>\n"
+                      "🚗 Crear tu historia desde cero con libertad total\n"
+                      "🎭 Disfrutar de eventos, tramas y rol dinámico\n"
+                      "🆘 Recibir soporte directo de nuestro staff",
+                inline=False
+            )
+            
+            embed.add_field(
+                name="📌 Canales importantes:",
+                value="📜 **Reglas del servidor** → <#1392978340989767832>\n"
+                      "📢 **Anuncios y novedades** → <#1392978364255440937>\n"
+                      "✅ **Verificación obligatoria** → <#1392978339085549672>\n"
+                      "📍 **Locales y propiedades disponibles** → <#1392978362208882748>\n"
+                      "🎫 **Tickets de soporte** → <#1392978373101490258>",
+                inline=False
+            )
+            
+            embed.add_field(
+                name="📝 Importante:",
+                value="Antes de comenzar, asegúrate de leer las reglas y **verificarte** en <#1392978339085549672> para acceder a todo el servidor.\n"
+                      "¿Tienes dudas? Abre un ticket en <#1392978373101490258> y te ayudaremos encantados.",
+                inline=False
+            )
+            
+            # Set thumbnail to user avatar
             embed.set_thumbnail(url=member.display_avatar.url)
             
-            # Add welcome banner or server image
+            # Add server icon if available
             if member.guild.icon:
                 embed.set_image(url=member.guild.icon.url)
             
-            # Enhanced footer with member count and join date
+            # Set footer
             embed.set_footer(
-                text=f"👥 Miembro #{len(member.guild.members)} • Únete a la aventura en {member.guild.name}",
+                text=f"🌆 ¡Nos vemos en las calles de Neon Vice RP! 🕶️ Tu historia empieza ahora.",
                 icon_url=member.guild.icon.url if member.guild.icon else None
             )
             
             # Add timestamp
             embed.timestamp = discord.utils.utcnow()
-            
-            # Add fields for better organization
-            embed.add_field(
-                name="🎯 Tu nueva aventura comienza ahora",
-                value="Explora los canales, conoce gente nueva y vive experiencias únicas",
-                inline=False
-            )
-            
+
             await welcome_channel.send(embed=embed)
             logger.info(f"Welcome message sent for {member} in {member.guild.name}")
             
@@ -279,46 +293,60 @@ class Welcome(commands.Cog):
                 await interaction.response.send_message(embed=embed, ephemeral=True)
                 return
             
-            # Create preview embed (same as the actual welcome message)
-            embed = discord.Embed(
-                title="🌟 ¡Un nuevo miembro ha llegado a la ciudad! 🌟",
-                description=f"## ¡Bienvenido {interaction.user.mention}! 👋\n\n"
-                           f"🎭 Has llegado a **{interaction.guild.name}**, donde cada historia comienza con una decisión...\n\n"
-                           f"### 🚀 **Primeros pasos para comenzar tu aventura:**\n"
-                           f"🔐 **Verificación:** Ve al canal de verificación y reacciona con ✅ para obtener acceso completo\n"
-                           f"📋 **Normas:** Lee nuestras reglas para mantener la armonía en la ciudad\n"
-                           f"🎤 **Presentación:** Cuéntanos quién eres y qué te trae por aquí\n"
-                           f"🎮 **Roleplay:** ¡Sumérgete en la experiencia más inmersiva!\n\n"
-                           f"### 💡 **¿Necesitas ayuda?**\n"
-                           f"🎫 Crea un ticket de soporte y nuestro staff te asistirá\n"
-                           f"👥 Pregunta a otros miembros de la comunidad\n\n"
-                           f"✨ *¡Esperamos que vivas experiencias inolvidables aquí!* ✨",
-                color=0x7289da
+            # Create preview embed (same as the actual welcome embed)
+            preview_embed = discord.Embed(
+                title="💎 ¡Bienvenid@ a **Neon Vice RP**! 🌆",
+                description=f"🕶️ Un nuevo nivel de rol, estilo y libertad en Los Santos.\n\n"
+                           f"👋 ¡Hola, {interaction.user.mention} nuevo ciudadano!\n"
+                           f"Has llegado a **Neon Vice**, un servidor de GTA V Roleplay donde el estilo, la historia y la comunidad hacen la diferencia.\n"
+                           f"Prepárate para vivir tu mejor versión en Los Santos. 🧬",
+                color=0x9d4edd
             )
             
-            # Set thumbnail to user's avatar
-            embed.set_thumbnail(url=interaction.user.display_avatar.url)
+            # Add fields for better organization
+            preview_embed.add_field(
+                name="🎯 ¿Qué puedes hacer en Neon Vice?",
+                value="🧑‍💼 Unirte a bandas, mafias, cuerpos de seguridad o negocios legales\n"
+                      "🏙️ Adquirir o alquilar locales → <#1392978362208882748>\n"
+                      "🚗 Crear tu historia desde cero con libertad total\n"
+                      "🎭 Disfrutar de eventos, tramas y rol dinámico\n"
+                      "🆘 Recibir soporte directo de nuestro staff",
+                inline=False
+            )
             
-            # Add server image if available
+            preview_embed.add_field(
+                name="📌 Canales importantes:",
+                value="📜 **Reglas del servidor** → <#1392978340989767832>\n"
+                      "📢 **Anuncios y novedades** → <#1392978364255440937>\n"
+                      "✅ **Verificación obligatoria** → <#1392978339085549672>\n"
+                      "📍 **Locales y propiedades disponibles** → <#1392978362208882748>\n"
+                      "🎫 **Tickets de soporte** → <#1392978373101490258>",
+                inline=False
+            )
+            
+            preview_embed.add_field(
+                name="📝 Importante:",
+                value="Antes de comenzar, asegúrate de leer las reglas y **verificarte** en <#1392978339085549672> para acceder a todo el servidor.\n"
+                      "¿Tienes dudas? Abre un ticket en <#1392978373101490258> y te ayudaremos encantados.",
+                inline=False
+            )
+            
+            # Set thumbnail to user avatar
+            preview_embed.set_thumbnail(url=interaction.user.display_avatar.url)
+            
+            # Add server icon if available
             if interaction.guild.icon:
-                embed.set_image(url=interaction.guild.icon.url)
+                preview_embed.set_image(url=interaction.guild.icon.url)
             
-            # Enhanced footer
-            embed.set_footer(
-                text=f"👥 Miembro #{len(interaction.guild.members)} • Únete a la aventura en {interaction.guild.name}",
+            # Set footer
+            preview_embed.set_footer(
+                text=f"🌆 ¡Nos vemos en las calles de Neon Vice RP! 🕶️ Tu historia empieza ahora.",
                 icon_url=interaction.guild.icon.url if interaction.guild.icon else None
             )
             
             # Add timestamp
-            embed.timestamp = discord.utils.utcnow()
-            
-            # Add field
-            embed.add_field(
-                name="🎯 Tu nueva aventura comienza ahora",
-                value="Explora los canales, conoce gente nueva y vive experiencias únicas",
-                inline=False
-            )
-            
+            preview_embed.timestamp = discord.utils.utcnow()
+
             # Send preview with notice
             preview_notice = discord.Embed(
                 title="👁️ Vista Previa del Mensaje de Bienvenida",
@@ -326,7 +354,8 @@ class Welcome(commands.Cog):
                 color=0x3498db
             )
             
-            await interaction.response.send_message(embeds=[preview_notice, embed], ephemeral=True)
+            await interaction.response.send_message(embed=preview_notice, ephemeral=True)
+            await interaction.followup.send(embed=preview_embed, ephemeral=True)
             logger.info(f"Welcome preview shown to {interaction.user} in {interaction.guild.name}")
             
         except Exception as e:

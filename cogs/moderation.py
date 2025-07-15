@@ -694,7 +694,7 @@ class Moderation(commands.Cog):
             # Comandos disponibles
             embed.add_field(
                 name="⚙️ Comandos Disponibles",
-                value="• `/limpiar` - Eliminar mensajes\n• `/banear` - Banear usuarios\n• `/timeout` - Silenciar usuarios\n• `/quitar-timeout` - Quitar silencio",
+                value="• `/limpiar` - Eliminar mensajes\n• `/banear` - Banear usuarios\n• `/timeout` - Silenciar usuarios\n• `/quitar-timeout` - Quitar silencio\n• `/asignar_rol` - Asignar rol a usuario (Solo Admin)\n• `/quitar_rol` - Quitar rol de usuario (Solo Admin)\n• `/set_moderator_role` - Configurar rol de moderación (Solo Admin)\n• `/remove_moderator_role` - Remover rol de moderación (Solo Admin)",
                 inline=False
             )
 
@@ -710,6 +710,399 @@ class Moderation(commands.Cog):
                 color=0xff0000
             )
             await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    @app_commands.command(name="set_moderator_role", description="Agrega un rol a los permisos de moderación")
+    @app_commands.describe(role="El rol que tendrá permisos de moderación")
+    @app_commands.default_permissions(administrator=True)
+    async def set_moderator_role(
+        self,
+        interaction: discord.Interaction,
+        role: discord.Role
+    ):
+        """Add a role to moderation permissions"""
+        try:
+            # Verificar que el usuario sea administrador
+            if not interaction.user.guild_permissions.administrator:
+                embed = discord.Embed(
+                    title="❌ Sin permisos",
+                    description="Solo los administradores pueden configurar roles de moderación.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            config = await load_config()
+            
+            # Crear estructura de servidor si no existe
+            if 'servers' not in config:
+                config['servers'] = {}
+            
+            guild_id_str = str(interaction.guild.id)
+            if guild_id_str not in config['servers']:
+                config['servers'][guild_id_str] = {}
+            
+            if 'moderation_role_ids' not in config['servers'][guild_id_str]:
+                config['servers'][guild_id_str]['moderation_role_ids'] = []
+
+            # Verificar si el rol ya está agregado
+            if role.id in config['servers'][guild_id_str]['moderation_role_ids']:
+                embed = discord.Embed(
+                    title="⚠️ Rol ya configurado",
+                    description=f"El rol {role.mention} ya tiene permisos de moderación.",
+                    color=0xffaa00
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Agregar el rol
+            config['servers'][guild_id_str]['moderation_role_ids'].append(role.id)
+            
+            # Guardar configuración
+            if await save_config(config):
+                embed = discord.Embed(
+                    title="✅ Rol de moderación agregado",
+                    description=f"El rol {role.mention} ahora tiene permisos de moderación.",
+                    color=0x00ff00
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                logger.info(f"Moderation role {role.name} added by {interaction.user}")
+            else:
+                embed = discord.Embed(
+                    title="❌ Error",
+                    description="No se pudo guardar la configuración.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        except Exception as e:
+            logger.error(f"Error setting moderator role: {e}")
+            embed = discord.Embed(
+                title="❌ Error",
+                description="Ocurrió un error al configurar el rol de moderación.",
+                color=0xff0000
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    @app_commands.command(name="remove_moderator_role", description="Remueve un rol de los permisos de moderación")
+    @app_commands.describe(role="El rol que perderá los permisos de moderación")
+    @app_commands.default_permissions(administrator=True)
+    async def remove_moderator_role(
+        self,
+        interaction: discord.Interaction,
+        role: discord.Role
+    ):
+        """Remove a role from moderation permissions"""
+        try:
+            # Verificar que el usuario sea administrador
+            if not interaction.user.guild_permissions.administrator:
+                embed = discord.Embed(
+                    title="❌ Sin permisos",
+                    description="Solo los administradores pueden configurar roles de moderación.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            config = await load_config()
+            guild_id_str = str(interaction.guild.id)
+            
+            # Verificar si existe la configuración
+            if ('servers' in config and 
+                guild_id_str in config['servers'] and 
+                'moderation_role_ids' in config['servers'][guild_id_str] and
+                role.id in config['servers'][guild_id_str]['moderation_role_ids']):
+                
+                # Remover el rol
+                config['servers'][guild_id_str]['moderation_role_ids'].remove(role.id)
+                
+                # Guardar configuración
+                if await save_config(config):
+                    embed = discord.Embed(
+                        title="✅ Rol de moderación removido",
+                        description=f"El rol {role.mention} ya no tiene permisos de moderación.",
+                        color=0x00ff00
+                    )
+                    await interaction.response.send_message(embed=embed, ephemeral=True)
+                    logger.info(f"Moderation role {role.name} removed by {interaction.user}")
+                else:
+                    embed = discord.Embed(
+                        title="❌ Error",
+                        description="No se pudo guardar la configuración.",
+                        color=0xff0000
+                    )
+                    await interaction.response.send_message(embed=embed, ephemeral=True)
+            else:
+                embed = discord.Embed(
+                    title="⚠️ Rol no configurado",
+                    description=f"El rol {role.mention} no tiene permisos de moderación.",
+                    color=0xffaa00
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        except Exception as e:
+            logger.error(f"Error removing moderator role: {e}")
+            embed = discord.Embed(
+                title="❌ Error",
+                description="Ocurrió un error al remover el rol de moderación.",
+                color=0xff0000
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    @app_commands.command(name="asignar_rol", description="Asigna un rol a un usuario específico")
+    @app_commands.describe(
+        usuario="Usuario al que se le asignará el rol",
+        rol="El rol que se asignará al usuario"
+    )
+    async def assign_role(
+        self,
+        interaction: discord.Interaction,
+        usuario: discord.Member,
+        rol: discord.Role
+    ):
+        """Assign a role to a specific user"""
+        try:
+            # Verificar que el usuario sea administrador
+            if not interaction.user.guild_permissions.administrator:
+                embed = discord.Embed(
+                    title="❌ Sin permisos",
+                    description="Solo los administradores pueden usar este comando.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar que el bot pueda gestionar el rol
+            if not interaction.guild.me.guild_permissions.manage_roles:
+                embed = discord.Embed(
+                    title="❌ Sin permisos",
+                    description="No tengo permisos para gestionar roles en este servidor.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar que el rol del bot sea superior al rol que se quiere asignar
+            if rol >= interaction.guild.me.top_role:
+                embed = discord.Embed(
+                    title="❌ Error de jerarquía",
+                    description=f"No puedo asignar el rol {rol.mention} porque está en una posición igual o superior a mi rol más alto.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar que el rol del usuario sea superior al rol que se quiere asignar
+            if rol >= interaction.user.top_role and interaction.user != interaction.guild.owner:
+                embed = discord.Embed(
+                    title="❌ Error de jerarquía",
+                    description=f"No puedes asignar el rol {rol.mention} porque está en una posición igual o superior a tu rol más alto.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar que no sea el rol @everyone
+            if rol == interaction.guild.default_role:
+                embed = discord.Embed(
+                    title="❌ Rol inválido",
+                    description="No puedes asignar el rol @everyone.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar si el usuario ya tiene el rol
+            if rol in usuario.roles:
+                embed = discord.Embed(
+                    title="⚠️ Rol ya asignado",
+                    description=f"{usuario.mention} ya tiene el rol {rol.mention}.",
+                    color=0xffaa00
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            await interaction.response.defer()
+
+            # Asignar el rol
+            await usuario.add_roles(rol, reason=f"Rol asignado por {interaction.user}")
+
+            # Mensaje de confirmación
+            embed = discord.Embed(
+                title="✅ Rol asignado",
+                description=f"Se asignó el rol {rol.mention} a {usuario.mention}.",
+                color=0x00ff00
+            )
+            embed.add_field(
+                name="Usuario",
+                value=f"{usuario.mention} ({usuario.id})",
+                inline=True
+            )
+            embed.add_field(
+                name="Rol",
+                value=f"{rol.mention}",
+                inline=True
+            )
+            embed.add_field(
+                name="Asignado por",
+                value=interaction.user.mention,
+                inline=True
+            )
+            embed.set_footer(
+                text=f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                icon_url=interaction.user.display_avatar.url
+            )
+
+            await interaction.followup.send(embed=embed)
+
+            # Log de la acción
+            logger.info(f"Role assigned: {rol.name} to {usuario} ({usuario.id}) by {interaction.user} ({interaction.user.id})")
+
+        except discord.Forbidden:
+            embed = discord.Embed(
+                title="❌ Sin permisos",
+                description="No tengo permisos para asignar este rol.",
+                color=0xff0000
+            )
+            await interaction.followup.send(embed=embed)
+        except Exception as e:
+            logger.error(f"Error in assign_role: {e}")
+            embed = discord.Embed(
+                title="❌ Error",
+                description="Ocurrió un error al asignar el rol.",
+                color=0xff0000
+            )
+            if not interaction.response.is_done():
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+            else:
+                await interaction.followup.send(embed=embed)
+
+    @app_commands.command(name="quitar_rol", description="Quita un rol de un usuario específico")
+    @app_commands.describe(
+        usuario="Usuario al que se le quitará el rol",
+        rol="El rol que se quitará del usuario"
+    )
+    async def remove_role(
+        self,
+        interaction: discord.Interaction,
+        usuario: discord.Member,
+        rol: discord.Role
+    ):
+        """Remove a role from a specific user"""
+        try:
+            # Verificar que el usuario sea administrador
+            if not interaction.user.guild_permissions.administrator:
+                embed = discord.Embed(
+                    title="❌ Sin permisos",
+                    description="Solo los administradores pueden usar este comando.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar que el bot pueda gestionar el rol
+            if not interaction.guild.me.guild_permissions.manage_roles:
+                embed = discord.Embed(
+                    title="❌ Sin permisos",
+                    description="No tengo permisos para gestionar roles en este servidor.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar que el rol del bot sea superior al rol que se quiere quitar
+            if rol >= interaction.guild.me.top_role:
+                embed = discord.Embed(
+                    title="❌ Error de jerarquía",
+                    description=f"No puedo quitar el rol {rol.mention} porque está en una posición igual o superior a mi rol más alto.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar que el rol del usuario sea superior al rol que se quiere quitar
+            if rol >= interaction.user.top_role and interaction.user != interaction.guild.owner:
+                embed = discord.Embed(
+                    title="❌ Error de jerarquía",
+                    description=f"No puedes quitar el rol {rol.mention} porque está en una posición igual o superior a tu rol más alto.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar que no sea el rol @everyone
+            if rol == interaction.guild.default_role:
+                embed = discord.Embed(
+                    title="❌ Rol inválido",
+                    description="No puedes quitar el rol @everyone.",
+                    color=0xff0000
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            # Verificar si el usuario tiene el rol
+            if rol not in usuario.roles:
+                embed = discord.Embed(
+                    title="⚠️ Rol no asignado",
+                    description=f"{usuario.mention} no tiene el rol {rol.mention}.",
+                    color=0xffaa00
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
+            await interaction.response.defer()
+
+            # Quitar el rol
+            await usuario.remove_roles(rol, reason=f"Rol quitado por {interaction.user}")
+
+            # Mensaje de confirmación
+            embed = discord.Embed(
+                title="✅ Rol quitado",
+                description=f"Se quitó el rol {rol.mention} de {usuario.mention}.",
+                color=0x00ff00
+            )
+            embed.add_field(
+                name="Usuario",
+                value=f"{usuario.mention} ({usuario.id})",
+                inline=True
+            )
+            embed.add_field(
+                name="Rol",
+                value=f"{rol.mention}",
+                inline=True
+            )
+            embed.add_field(
+                name="Quitado por",
+                value=interaction.user.mention,
+                inline=True
+            )
+            embed.set_footer(
+                text=f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                icon_url=interaction.user.display_avatar.url
+            )
+
+            await interaction.followup.send(embed=embed)
+
+            # Log de la acción
+            logger.info(f"Role removed: {rol.name} from {usuario} ({usuario.id}) by {interaction.user} ({interaction.user.id})")
+
+        except discord.Forbidden:
+            embed = discord.Embed(
+                title="❌ Sin permisos",
+                description="No tengo permisos para quitar este rol.",
+                color=0xff0000
+            )
+            await interaction.followup.send(embed=embed)
+        except Exception as e:
+            logger.error(f"Error in remove_role: {e}")
+            embed = discord.Embed(
+                title="❌ Error",
+                description="Ocurrió un error al quitar el rol.",
+                color=0xff0000
+            )
+            if not interaction.response.is_done():
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+            else:
+                await interaction.followup.send(embed=embed)
 
 async def setup(bot):
     await bot.add_cog(Moderation(bot))
