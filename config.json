@@ -80,7 +80,23 @@
       "transcript_channel_id": 1388791075313029221
     },
     "957718931496386670": {
-      "verification_role_id": 1392978068301418548
+      "verification_role_id": 1392978068301418548,
+      "welcome_channel_id": 1392978337940504656,
+      "staff_role_ids": [
+        1392978031940993200
+      ],
+      "staff_mention_role_id": 1392978031940993200,
+      "ticket_category_id": 1392978327387770991,
+      "moderation_role_ids": [
+        1392978031940993200
+      ],
+      "transcript_channel_id": 1392978463861772352
+    },
+    "954889561530564668": {
+      "staff_role_ids": [
+        1348523306998829057
+      ],
+      "staff_mention_role_id": 1348523306998829057
     }
   },
   "guilds": {

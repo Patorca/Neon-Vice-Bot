@@ -152,6 +152,11 @@ This is a Discord bot built with Python using the discord.py library. The bot pr
 - July 6, 2025. Successfully completed migration from Replit Agent to standard Replit environment - all dependencies installed, Discord bot token configured securely, and bot running successfully with all 28 slash commands synced and active in 10 Discord guilds
 - July 9, 2025. Enhanced FiveM status monitoring system for improved multi-server support - added robust error handling for message/channel deletion, improved persistence across bot restarts, better logging with server names, and added global monitoring status command for administrators
 - July 10, 2025. Added mass role assignment system - new `/asignar_rol_todos` command allows administrators to assign a role to all server members with progress tracking, error handling, and comprehensive reporting
+- July 10, 2025. Successfully completed migration from Replit Agent to standard Replit environment - all dependencies installed, bot token configured securely, and bot running with 30 slash commands across 11 Discord servers
+- July 10, 2025. Added server information commands - new `/servidor_info` command shows detailed server statistics including member counts, channels, roles, boost level, and server features, and `/servidor_logo` command displays server icon with download links in multiple sizes
+- July 12, 2025. Updated welcome system with new Neon Vice RP template - enhanced welcome message includes specific channel references, role mentions, server features, and improved formatting for better user onboarding experience
+- July 12, 2025. Converted welcome system to embedded format - welcome messages now display as Discord embeds with organized fields, thumbnails, server icons, timestamps, and improved visual presentation with purple color scheme
+- July 12, 2025. Enhanced moderation system security - all moderation commands now require configured moderator roles or default Discord permissions, added individual role assignment commands (`/asignar_rol`, `/quitar_rol`) restricted to administrators, and maintained mass role assignment restricted to administrators
 
 ## User Preferences
 
