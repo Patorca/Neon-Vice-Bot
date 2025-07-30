@@ -20,3 +20,5 @@ aiohttp
 discord.py
 aiohttp
 discord.py
+aiohttp>=3.8.0
+discord.py>=2.5.2

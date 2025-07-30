@@ -158,6 +158,7 @@ This is a Discord bot built with Python using the discord.py library. The bot pr
 - July 12, 2025. Converted welcome system to embedded format - welcome messages now display as Discord embeds with organized fields, thumbnails, server icons, timestamps, and improved visual presentation with purple color scheme
 - July 12, 2025. Enhanced moderation system security - all moderation commands now require configured moderator roles or default Discord permissions, added individual role assignment commands (`/asignar_rol`, `/quitar_rol`) restricted to administrators, and maintained mass role assignment restricted to administrators
 - July 20, 2025. Successfully debugged and fixed Discord bot startup issue - configured DISCORD_BOT_TOKEN environment variable, bot now running successfully with Neon Vice BOT#5570 connected to 12 Discord guilds, all 32 slash commands synced, and FiveM status monitoring active
+- July 25, 2025. Successfully completed migration from Replit Agent to standard Replit environment - cleaned up duplicate dependencies in requirements.txt, installed discord.py>=2.5.2 and aiohttp>=3.8.0 via package manager, configured DISCORD_BOT_TOKEN environment variable securely, bot now running with all 32 slash commands synced across 12 Discord servers and FiveM monitoring system active
 
 ## User Preferences
 
