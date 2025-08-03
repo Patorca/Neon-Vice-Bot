@@ -195,14 +195,51 @@ class CloseTicketView(discord.ui.View):
         await interaction.response.send_message(embed=embed)
 
         ticket_creator = None
-        parts = channel.name.split('-')
-        if len(parts) >= 3:
-            username = '-'.join(parts[1:-1])
-            discriminator = parts[-1]
-            for member in channel.guild.members:
-                if member.name.lower() == username and member.discriminator == discriminator:
-                    ticket_creator = member
-                    break
+        
+        # Primero intentar obtener el creador del topic del canal (más confiable)
+        if channel.topic and 'Support ticket for' in channel.topic:
+            try:
+                # El topic tiene el formato: "Support ticket for DisplayName (user_id)"
+                import re
+                user_id_match = re.search(r'\((\d+)\)$', channel.topic)
+                if user_id_match:
+                    user_id = int(user_id_match.group(1))
+                    ticket_creator = channel.guild.get_member(user_id)
+                    if ticket_creator:
+                        logger.info(f"Creador del ticket encontrado por topic: {ticket_creator} (ID: {user_id})")
+            except Exception as e:
+                logger.error(f"Error extrayendo user_id del topic: {e}")
+        
+        # Si no se pudo encontrar por topic, intentar por el nombre del canal (método anterior)
+        if not ticket_creator:
+            parts = channel.name.split('-')
+            if len(parts) >= 3:
+                username = '-'.join(parts[1:-1])
+                discriminator = parts[-1]
+                for member in channel.guild.members:
+                    if member.name.lower() == username and member.discriminator == discriminator:
+                        ticket_creator = member
+                        logger.info(f"Creador del ticket encontrado por nombre: {ticket_creator}")
+                        break
+        
+        # Si aún no se encuentra, buscar en los permisos del canal
+        if not ticket_creator:
+            for overwrite_target, overwrite in channel.overwrites.items():
+                if isinstance(overwrite_target, discord.Member):
+                    # Si el usuario tiene permisos específicos y no es el bot
+                    if (overwrite.view_channel is True and 
+                        overwrite.send_messages is True and 
+                        overwrite_target != channel.guild.me):
+                        ticket_creator = overwrite_target
+                        logger.info(f"Creador del ticket encontrado por permisos: {ticket_creator}")
+                        break
+
+        # Logging adicional para debugging
+        if not ticket_creator:
+            logger.warning(f"No se pudo identificar el creador del ticket {channel.name}. Topic: {channel.topic}")
+            logger.warning(f"Overwrites del canal: {[(str(target), overwrite.pair()) for target, overwrite in channel.overwrites.items()]}")
+        else:
+            logger.info(f"Creador del ticket identificado exitosamente: {ticket_creator} para canal {channel.name}")
 
         try:
             if ticket_creator:
@@ -777,6 +814,146 @@ class Tickets(commands.Cog):
             logger.error(f"Error mostrando info de transcripts: {e}")
             await interaction.response.send_message(
                 "❌ Ocurrió un error al mostrar la información de transcripts!",
+                ephemeral=True
+            )
+
+    @app_commands.command(name="rename-ticket", description="Cambiar el nombre de un ticket")
+    @app_commands.describe(new_name="Nuevo nombre para el ticket (sin espacios, usar guiones)")
+    async def rename_ticket(
+        self,
+        interaction: discord.Interaction,
+        new_name: str
+    ):
+        """Cambiar el nombre de un ticket"""
+        channel = interaction.channel
+        
+        # Verificar que estamos en un canal de ticket
+        if not channel.name.startswith('ticket-'):
+            await interaction.response.send_message(
+                "❌ Este comando solo puede usarse en canales de ticket!",
+                ephemeral=True
+            )
+            return
+        
+        # Verificar permisos
+        user = interaction.user
+        can_rename = False
+        
+        # El creador del ticket puede renombrarlo
+        if f'-{user.name.lower()}-{user.discriminator}' in channel.name:
+            can_rename = True
+        
+        # Staff roles pueden renombrar tickets
+        if not can_rename:
+            try:
+                config = await load_config()
+                guild_id_str = str(channel.guild.id)
+                server_config = config.get('servers', {}).get(guild_id_str, {})
+                staff_role_ids = server_config.get('staff_role_ids', [])
+                for role_id in staff_role_ids:
+                    if discord.utils.get(user.roles, id=role_id):
+                        can_rename = True
+                        break
+            except Exception as e:
+                logger.error(f"Error verificando roles de staff: {e}")
+        
+        # Usuarios con permisos de gestionar canales pueden renombrar
+        if not can_rename and channel.permissions_for(user).manage_channels:
+            can_rename = True
+        
+        if not can_rename:
+            await interaction.response.send_message(
+                "❌ No tienes permiso para renombrar este ticket!",
+                ephemeral=True
+            )
+            return
+        
+        # Validar el nuevo nombre
+        new_name = new_name.lower().strip()
+        if not new_name:
+            await interaction.response.send_message(
+                "❌ El nombre del ticket no puede estar vacío!",
+                ephemeral=True
+            )
+            return
+        
+        # Limpiar el nombre (remover caracteres no permitidos)
+        import re
+        new_name = re.sub(r'[^a-z0-9\-_]', '', new_name)
+        if not new_name:
+            await interaction.response.send_message(
+                "❌ El nombre del ticket solo puede contener letras, números, guiones y guiones bajos!",
+                ephemeral=True
+            )
+            return
+        
+        # Construir el nuevo nombre del canal manteniendo la estructura original
+        original_parts = channel.name.split('-')
+        if len(original_parts) >= 3:
+            # Mantener 'ticket-' al inicio y el discriminador al final
+            username = '-'.join(original_parts[1:-1])
+            discriminator = original_parts[-1]
+            new_channel_name = f"ticket-{new_name}-{username}-{discriminator}"
+        else:
+            # Fallback si el formato no es el esperado
+            new_channel_name = f"ticket-{new_name}"
+        
+        # Verificar que el nuevo nombre no sea demasiado largo (limite de Discord: 100 caracteres)
+        if len(new_channel_name) > 100:
+            await interaction.response.send_message(
+                "❌ El nombre del ticket es demasiado largo! Máximo 100 caracteres en total.",
+                ephemeral=True
+            )
+            return
+        
+        # Verificar que no existe ya un canal con ese nombre
+        existing_channel = discord.utils.get(channel.guild.channels, name=new_channel_name)
+        if existing_channel and existing_channel.id != channel.id:
+            await interaction.response.send_message(
+                f"❌ Ya existe un canal con el nombre `{new_channel_name}`!",
+                ephemeral=True
+            )
+            return
+        
+        try:
+            old_name = channel.name
+            await channel.edit(name=new_channel_name, reason=f"Ticket renombrado por {user}")
+            
+            # Crear embed de confirmación
+            embed = discord.Embed(
+                title="✅ Ticket Renombrado",
+                description=f"El nombre del ticket ha sido cambiado exitosamente.",
+                color=0x00ff00
+            )
+            embed.add_field(
+                name="Nombre anterior",
+                value=f"`{old_name}`",
+                inline=True
+            )
+            embed.add_field(
+                name="Nombre nuevo",
+                value=f"`{new_channel_name}`",
+                inline=True
+            )
+            embed.add_field(
+                name="Renombrado por",
+                value=user.mention,
+                inline=False
+            )
+            embed.set_footer(text=f"Renombrado el {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            
+            await interaction.response.send_message(embed=embed)
+            logger.info(f"Ticket renombrado de {old_name} a {new_channel_name} por {user} ({user.id})")
+            
+        except discord.Forbidden:
+            await interaction.response.send_message(
+                "❌ No tengo permisos para renombrar canales!",
+                ephemeral=True
+            )
+        except Exception as e:
+            logger.error(f"Error renombrando ticket: {e}")
+            await interaction.response.send_message(
+                "❌ Ocurrió un error al renombrar el ticket!",
                 ephemeral=True
             )
 
